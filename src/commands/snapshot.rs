@@ -34,8 +34,14 @@ pub fn run(cli: &Cli, no_save: bool) -> Result<i32> {
         println!("snapshot {}", snap.id);
         println!("  created:   {}", snap.created_at);
         println!("  hostname:  {}", snap.hostname);
-        println!("  public_ip: {}", snap.public_ip.as_deref().unwrap_or("(none)"));
-        println!("  gateway:   {}", snap.default_gateway.as_deref().unwrap_or("(none)"));
+        println!(
+            "  public_ip: {}",
+            snap.public_ip.as_deref().unwrap_or("(none)")
+        );
+        println!(
+            "  gateway:   {}",
+            snap.default_gateway.as_deref().unwrap_or("(none)")
+        );
         println!("  ifaces:    {}", snap.interfaces.len());
         println!("  vpn hints: {}", snap.vpn.active_hints.join(", "));
         if let Some(ref ssid) = snap.wifi.ssid {

@@ -41,12 +41,7 @@ pub fn diff(left: &Snapshot, right: &Snapshot) -> DiffReport {
         &right.ipv6_enabled.to_string(),
     );
 
-    list_diff(
-        &mut changes,
-        "local_ips",
-        &left.local_ips,
-        &right.local_ips,
-    );
+    list_diff(&mut changes, "local_ips", &left.local_ips, &right.local_ips);
     list_diff(
         &mut changes,
         "dns.nameservers",

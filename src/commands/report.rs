@@ -39,11 +39,17 @@ pub fn run(cli: &Cli, snapshot: Option<&str>) -> Result<i32> {
         println!("id:        {}", snap.id);
         println!("created:   {}", snap.created_at);
         println!("hostname:  {}", snap.hostname);
-        println!("public_ip: {}", snap.public_ip.as_deref().unwrap_or("(none)"));
+        println!(
+            "public_ip: {}",
+            snap.public_ip.as_deref().unwrap_or("(none)")
+        );
         if let Some(ref e) = snap.public_ip_error {
             println!("public_ip_note: {e}");
         }
-        println!("gateway:   {}", snap.default_gateway.as_deref().unwrap_or("(none)"));
+        println!(
+            "gateway:   {}",
+            snap.default_gateway.as_deref().unwrap_or("(none)")
+        );
         println!("ipv6:      {}", snap.ipv6_enabled);
         println!();
         println!("== Interfaces ==");

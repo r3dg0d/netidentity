@@ -20,7 +20,10 @@ pub fn detect() -> WifiState {
                 for line in String::from_utf8_lossy(&out.stdout).lines() {
                     let parts: Vec<&str> = line.split(':').collect();
                     if parts.first() == Some(&"yes") {
-                        st.ssid = parts.get(1).map(|s| s.to_string()).filter(|s| !s.is_empty());
+                        st.ssid = parts
+                            .get(1)
+                            .map(|s| s.to_string())
+                            .filter(|s| !s.is_empty());
                         st.device = parts.get(2).map(|s| s.to_string());
                         st.method = Some("nmcli".into());
                         return st;
@@ -29,7 +32,17 @@ pub fn detect() -> WifiState {
             }
         }
         // connection show
-        if let Ok(out) = Command::new("nmcli").args(["-t", "-f", "NAME,TYPE,DEVICE", "connection", "show", "--active"]).output() {
+        if let Ok(out) = Command::new("nmcli")
+            .args([
+                "-t",
+                "-f",
+                "NAME,TYPE,DEVICE",
+                "connection",
+                "show",
+                "--active",
+            ])
+            .output()
+        {
             for line in String::from_utf8_lossy(&out.stdout).lines() {
                 if line.contains("wireless") || line.contains("wifi") {
                     let parts: Vec<&str> = line.split(':').collect();

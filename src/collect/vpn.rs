@@ -27,10 +27,7 @@ pub fn detect() -> VpnState {
     if let Ok(entries) = std::fs::read_dir("/sys/class/net") {
         for e in entries.flatten() {
             let name = e.file_name().to_string_lossy().to_string();
-            if name.starts_with("wg")
-                || name.contains("wireguard")
-                || name.starts_with("mullvad")
-            {
+            if name.starts_with("wg") || name.contains("wireguard") || name.starts_with("mullvad") {
                 let state = std::fs::read_to_string(e.path().join("operstate"))
                     .ok()
                     .map(|s| s.trim().to_string())
@@ -60,7 +57,11 @@ pub fn detect() -> VpnState {
     }
 
     if command_exists("tailscale") {
-        if let Ok(out) = Command::new("tailscale").arg("status").arg("--json").output() {
+        if let Ok(out) = Command::new("tailscale")
+            .arg("status")
+            .arg("--json")
+            .output()
+        {
             if out.status.success() {
                 st.tailscale = Some("tailscale status --json ok".into());
                 st.active_hints.push("tailscale-present".into());

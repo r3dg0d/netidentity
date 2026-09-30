@@ -12,9 +12,7 @@ pub struct MdnsUpnpState {
 
 pub fn detect() -> MdnsUpnpState {
     let mut st = MdnsUpnpState {
-        notes: vec![
-            "mDNS/UPnP detection is best-effort without heavy SSDP libraries.".into(),
-        ],
+        notes: vec!["mDNS/UPnP detection is best-effort without heavy SSDP libraries.".into()],
         ..Default::default()
     };
 

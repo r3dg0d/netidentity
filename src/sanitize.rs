@@ -8,8 +8,14 @@ fn patterns() -> &'static [Regex] {
     CELL.get_or_init(|| {
         vec![
             Regex::new(r"(?i)bearer\s+[a-z0-9\-._~+/]+=*").unwrap(),
-            Regex::new(r"(?i)(api[_-]?key|token|secret|password|passwd|authorization)\s*[:=]\s*\S+.*").unwrap(),
-            Regex::new(r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----").unwrap(),
+            Regex::new(
+                r"(?i)(api[_-]?key|token|secret|password|passwd|authorization)\s*[:=]\s*\S+.*",
+            )
+            .unwrap(),
+            Regex::new(
+                r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----",
+            )
+            .unwrap(),
             Regex::new(r"(?i)psk\s*[:=]\s*\S+").unwrap(),
         ]
     })

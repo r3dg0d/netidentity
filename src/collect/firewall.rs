@@ -17,18 +17,27 @@ pub fn detect() -> FirewallState {
             if out.status.success() {
                 st.readable = true;
                 let text = String::from_utf8_lossy(&out.stdout);
-                st.summary.push(format!("nft ruleset lines: {}", text.lines().count()));
-                for line in text.lines().filter(|l| {
-                    let t = l.trim();
-                    t.starts_with("table ") || t.starts_with("chain ")
-                }).take(30) {
+                st.summary
+                    .push(format!("nft ruleset lines: {}", text.lines().count()));
+                for line in text
+                    .lines()
+                    .filter(|l| {
+                        let t = l.trim();
+                        t.starts_with("table ") || t.starts_with("chain ")
+                    })
+                    .take(30)
+                {
                     st.summary.push(line.trim().to_string());
                 }
                 return st;
             } else {
                 st.summary.push(format!(
                     "nft present but not readable: {}",
-                    String::from_utf8_lossy(&out.stderr).trim().chars().take(200).collect::<String>()
+                    String::from_utf8_lossy(&out.stderr)
+                        .trim()
+                        .chars()
+                        .take(200)
+                        .collect::<String>()
                 ));
             }
         }
@@ -40,12 +49,14 @@ pub fn detect() -> FirewallState {
             if out.status.success() {
                 st.readable = true;
                 let text = String::from_utf8_lossy(&out.stdout);
-                st.summary.push(format!("iptables -S lines: {}", text.lines().count()));
+                st.summary
+                    .push(format!("iptables -S lines: {}", text.lines().count()));
                 for line in text.lines().take(40) {
                     st.summary.push(line.to_string());
                 }
             } else {
-                st.summary.push("iptables present but not readable (need root?)".into());
+                st.summary
+                    .push("iptables present but not readable (need root?)".into());
             }
         }
     }

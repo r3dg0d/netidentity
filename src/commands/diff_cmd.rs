@@ -21,10 +21,7 @@ pub fn run(cli: &Cli, left: &str, right: &str) -> Result<i32> {
             match c.change_type.as_str() {
                 "added" => println!("  + {} {}", c.field, c.after.as_deref().unwrap_or("")),
                 "removed" => println!("  - {} {}", c.field, c.before.as_deref().unwrap_or("")),
-                _ => println!(
-                    "  ~ {} {:?} → {:?}",
-                    c.field, c.before, c.after
-                ),
+                _ => println!("  ~ {} {:?} → {:?}", c.field, c.before, c.after),
             }
         }
     }

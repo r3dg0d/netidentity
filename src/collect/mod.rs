@@ -5,11 +5,11 @@ pub mod firewall;
 pub mod hostname;
 pub mod interfaces;
 pub mod listening;
+pub mod mdns_upnp;
 pub mod public_ip;
 pub mod routes;
 pub mod vpn;
 pub mod wifi;
-pub mod mdns_upnp;
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
@@ -78,11 +78,14 @@ pub fn collect(opts: CollectOpts) -> Snapshot {
     }
 
     let (public_ip, public_ip_error) = if opts.offline || !opts.fetch_public_ip {
-        (None, if opts.offline {
-            Some("offline mode".into())
-        } else {
-            Some("public IP fetch disabled".into())
-        })
+        (
+            None,
+            if opts.offline {
+                Some("offline mode".into())
+            } else {
+                Some("public IP fetch disabled".into())
+            },
+        )
     } else {
         match public_ip::fetch() {
             Ok(ip) => (Some(ip), None),

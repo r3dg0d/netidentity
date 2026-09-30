@@ -7,12 +7,7 @@ use std::time::Duration;
 /// else a plain HTTP fallback to a known service (best-effort).
 pub fn fetch() -> Result<String> {
     if let Ok(out) = std::process::Command::new("curl")
-        .args([
-            "-fsS",
-            "--max-time",
-            "5",
-            "https://api.ipify.org",
-        ])
+        .args(["-fsS", "--max-time", "5", "https://api.ipify.org"])
         .output()
     {
         if out.status.success() {

@@ -18,10 +18,7 @@ pub fn list() -> Vec<ListenEntry> {
 }
 
 fn from_ss() -> Option<Vec<ListenEntry>> {
-    let out = Command::new("ss")
-        .args(["-tulpnH"])
-        .output()
-        .ok()?;
+    let out = Command::new("ss").args(["-tulpnH"]).output().ok()?;
     if !out.status.success() {
         return None;
     }
